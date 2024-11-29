@@ -1,30 +1,33 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 
-namespace ShuntingYard
+namespace ExpressionEvaluation
 {
-
     public class ExpressionEvaluator
     {
-        private Dictionary<char, int> precedencia;
+        private readonly Dictionary<string, double> _variables;
+        private readonly Dictionary<string, int> _precedencia;
 
-        public ExpressionEvaluator()
+        public ExpressionEvaluator(Dictionary<string, double> variables)
         {
-            precedencia = new Dictionary<char, int>()
+            _variables = variables ?? new Dictionary<string, double>();
+            _precedencia = new Dictionary<string, int>()
             {
-                {'^', 4},
-                {'*', 3},
-                {'/', 3},
-                {'%', 3},
-                {'+', 2},
-                {'-', 2},
-                {'(', 1}
+                {"^", 4},
+                {"*", 3},
+                {"/", 3},
+                {"%", 3},
+                {"+", 2},
+                {"-", 2},
+                {"(", 1}
             };
         }
 
-        public double EvaluateExpression(string expression, Dictionary<string, double> variables)
+        public double Evaluate(string expression)
         {
             string postfix = ConvertToPostfix(expression);
-            return EvaluatePostfix(postfix, variables);
+            return EvaluatePostfix(postfix);
         }
 
         private string ConvertToPostfix(string infix)
@@ -37,18 +40,18 @@ namespace ShuntingYard
             {
                 char token = infix[i];
 
-                if (Char.IsWhiteSpace(token))
+                if (char.IsWhiteSpace(token))
                 {
                     i++;
                     continue;
                 }
 
-                if (Char.IsDigit(token) || token == '.')
+                if (char.IsDigit(token) || token == '.')
                 {
                     string operando = "";
                     bool hayPuntoDecimal = false;
 
-                    while (i < infix.Length && (Char.IsDigit(infix[i]) || infix[i] == '.'))
+                    while (i < infix.Length && (char.IsDigit(infix[i]) || infix[i] == '.'))
                     {
                         if (infix[i] == '.')
                         {
@@ -64,11 +67,11 @@ namespace ShuntingYard
                     salida.Add(operando);
                     continue;
                 }
-                else if (Char.IsLetter(token))
+                else if (char.IsLetter(token))
                 {
                     // Manejo de variables (letras o palabras)
                     string variable = "";
-                    while (i < infix.Length && Char.IsLetterOrDigit(infix[i]))
+                    while (i < infix.Length && char.IsLetterOrDigit(infix[i]))
                     {
                         variable += infix[i];
                         i++;
@@ -96,12 +99,12 @@ namespace ShuntingYard
                 }
                 else // Operador
                 {
-                    if (!precedencia.ContainsKey(token))
-                    {
-                        throw new Exception($"Operador desconocido: {token}");
-                    }
                     string opToken = token.ToString();
-                    while (pilaOperadores.Count > 0 && precedencia.ContainsKey(pilaOperadores.Peek()[0]) && precedencia[pilaOperadores.Peek()[0]] >= precedencia[token])
+                    if (!_precedencia.ContainsKey(opToken))
+                    {
+                        throw new Exception($"Operador desconocido: {opToken}");
+                    }
+                    while (pilaOperadores.Count > 0 && _precedencia.ContainsKey(pilaOperadores.Peek()) && _precedencia[pilaOperadores.Peek()] >= _precedencia[opToken])
                     {
                         salida.Add(pilaOperadores.Pop());
                     }
@@ -122,7 +125,7 @@ namespace ShuntingYard
             return string.Join(" ", salida);
         }
 
-        private double EvaluatePostfix(string postfix, Dictionary<string, double> variables)
+        private double EvaluatePostfix(string postfix)
         {
             Stack<double> stack = new Stack<double>();
             string[] tokens = postfix.Split(' ');
@@ -159,9 +162,9 @@ namespace ShuntingYard
                 else
                 {
                     // Asumimos que es una variable
-                    if (variables.ContainsKey(token))
+                    if (_variables.ContainsKey(token))
                     {
-                        stack.Push(variables[token]);
+                        stack.Push(_variables[token]);
                     }
                     else
                     {
@@ -180,8 +183,7 @@ namespace ShuntingYard
 
         private bool IsOperator(string token)
         {
-            return token == "+" || token == "-" || token == "*" || token == "/" || token == "%" || token == "^";
+            return _precedencia.ContainsKey(token);
         }
     }
-
 }
