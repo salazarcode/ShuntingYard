@@ -71,11 +71,8 @@ namespace Tests
             var variables = new Dictionary<string, double>();
             string expression = "x + 2";
 
-            // Act 
-            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
-
-            // Assert
-            Assert.Throws<Exception>(() => result);
+            // Act & Assert
+            Assert.Throws<Exception>(() => new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables));
         }
 
         [Fact]
@@ -85,11 +82,8 @@ namespace Tests
             var variables = new Dictionary<string, double>();
             string expression = "2 + * 3";
 
-            // Act
-            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
-
-            // Assert
-            Assert.Throws<Exception>(() => result);
+            // Act & Assert
+            Assert.Throws<Exception>(() => new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables));
         }
 
         [Fact]
