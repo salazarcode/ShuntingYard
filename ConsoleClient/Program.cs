@@ -1,4 +1,5 @@
 ﻿using ShuntingYardEvaluator;
+using System.Drawing;
 
 namespace ConsoleClient
 {
@@ -8,28 +9,13 @@ namespace ConsoleClient
         {
             ExpressionEvaluator evaluator = new ExpressionEvaluator();
 
-
-            Console.WriteLine($"Example variables:---------------------------start");
-            Console.WriteLine("");
-
-            Dictionary<string, double> variables = new Dictionary<string, double>()
-            {
-                {"estudiantes", 6},
-                {"interes", 26},
-                {"peso", 16.5 }
-            };
-            foreach (var item in variables)
-            {
-
-                Console.WriteLine($"{item.Key}: {item.Value}");
-            }
-
-            Console.WriteLine("");
-            Console.WriteLine($"Variables:---------------------------end");
-            Console.WriteLine("");
-
             while (true)
             {
+                Dictionary<string, double> variables = GetVariablesFromUser();
+
+                PrintVariables(variables);
+
+                Console.WriteLine("");
                 Console.WriteLine("Introduce una expresion para evaluarla con las variables preconfiguradas: ");
                 string expression = Console.ReadLine() ?? "";
 
@@ -39,6 +25,41 @@ namespace ConsoleClient
                 Console.WriteLine($"Expresión: {expression}");
                 Console.WriteLine($"Resultado: {result}");
             }
+        }
+
+        private static void PrintVariables(Dictionary<string, double> variables)
+        {
+            Console.WriteLine($"Variables:---------------------------start");
+            Console.WriteLine("");
+            foreach (var item in variables)
+            {
+                Console.WriteLine($"{item.Key}: {item.Value}");
+            }
+            Console.WriteLine("");
+            Console.WriteLine($"Variables:---------------------------end");
+            Console.WriteLine("");
+        }
+
+        private static Dictionary<string, double> GetVariablesFromUser()
+        {
+            var variables = new Dictionary<string, double>(); 
+            string variable = "";
+            double valor = 0;
+            while (true)
+            {
+                Console.WriteLine("Ingresa el nombre de la variable: ");
+                variable = Console.ReadLine()?.Trim();
+                if (variable == ":q")
+                    break;
+
+                Console.WriteLine($"Ingresa el valor de {variable}: ");
+                valor = double.Parse(Console.ReadLine());
+
+                variables.Add(variable, valor);
+                Console.WriteLine("");
+            }
+
+            return variables;
         }
     }
 }
