@@ -9,11 +9,10 @@ namespace Tests
         {
             // Propiedad asociativa
             var variables = new Dictionary<string, double>();
-            var evaluator = new ExpressionEvaluator(variables);
             string expression = "2 + 3 * 4";
 
             // Act
-            double result = evaluator.Evaluate(expression);
+            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
 
             // Assert
             Assert.Equal(14, result);
@@ -28,11 +27,10 @@ namespace Tests
                 { "x", 5 },
                 { "y", 10 }
             };
-            var evaluator = new ExpressionEvaluator(variables);
             string expression = "x * y + 2";
 
             // Act
-            double result = evaluator.Evaluate(expression);
+            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
 
             // Assert
             Assert.Equal(52, result);
@@ -43,11 +41,10 @@ namespace Tests
         {
             // Arrange
             var variables = new Dictionary<string, double>();
-            var evaluator = new ExpressionEvaluator(variables);
             string expression = "(2 + 3) * 4";
 
             // Act
-            double result = evaluator.Evaluate(expression);
+            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
 
             // Assert
             Assert.Equal(20, result);
@@ -58,11 +55,10 @@ namespace Tests
         {
             // Arrange
             var variables = new Dictionary<string, double>();
-            var evaluator = new ExpressionEvaluator(variables);
             string expression = "5.5 * 2";
 
             // Act
-            double result = evaluator.Evaluate(expression);
+            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
 
             // Assert
             Assert.Equal(11, result);
@@ -73,11 +69,13 @@ namespace Tests
         {
             // Arrange
             var variables = new Dictionary<string, double>();
-            var evaluator = new ExpressionEvaluator(variables);
             string expression = "x + 2";
 
-            // Act & Assert
-            Assert.Throws<Exception>(() => evaluator.Evaluate(expression));
+            // Act 
+            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
+
+            // Assert
+            Assert.Throws<Exception>(() => result);
         }
 
         [Fact]
@@ -85,11 +83,13 @@ namespace Tests
         {
             // Arrange
             var variables = new Dictionary<string, double>();
-            var evaluator = new ExpressionEvaluator(variables);
             string expression = "2 + * 3";
 
-            // Act & Assert
-            Assert.Throws<Exception>(() => evaluator.Evaluate(expression));
+            // Act
+            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
+
+            // Assert
+            Assert.Throws<Exception>(() => result);
         }
 
         [Fact]
@@ -102,11 +102,11 @@ namespace Tests
                 { "b", 3 },
                 { "c", 2 }
             };
-            var evaluator = new ExpressionEvaluator(variables);
+
             string expression = "a + b * c ^ 2 - (b % c)";
 
             // Act
-            double result = evaluator.Evaluate(expression);
+            var result = new ExpressionEvaluator().EvaluateFromInfixExpression(expression, variables);
 
             // Calculando manualmente:
             // c ^ 2 = 4
