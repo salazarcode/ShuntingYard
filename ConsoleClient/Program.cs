@@ -1,6 +1,6 @@
 ﻿using ShuntingYardEvaluator;
 
-namespace ShuntingYard
+namespace ConsoleClient
 {
     internal class Program
     {
@@ -14,7 +14,7 @@ namespace ShuntingYard
             };
             ExpressionEvaluator evaluator = new ExpressionEvaluator(variables);
 
-                
+
             Console.WriteLine($"Variables:---------------------------start");
 
             foreach (var item in variables)
@@ -27,7 +27,8 @@ namespace ShuntingYard
 
             Console.WriteLine("");
 
-            while (true) { 
+            while (true)
+            {
                 Console.WriteLine("Introduce una expresion para evaluarla con las variables preconfiguradas: ");
                 string expression = Console.ReadLine() ?? "";
 
