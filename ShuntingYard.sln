@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShuntingYard", "ShuntingYar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\Tests\Tests.csproj", "{14CC23F9-69BA-4B2C-A2E7-B86E90DBBBCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShuntingYardEvaluator", "..\ShuntingYardEvaluator\ShuntingYardEvaluator.csproj", "{84D16640-05D1-4F67-92DD-FCF5D8DACB94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{14CC23F9-69BA-4B2C-A2E7-B86E90DBBBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14CC23F9-69BA-4B2C-A2E7-B86E90DBBBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14CC23F9-69BA-4B2C-A2E7-B86E90DBBBCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84D16640-05D1-4F67-92DD-FCF5D8DACB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84D16640-05D1-4F67-92DD-FCF5D8DACB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84D16640-05D1-4F67-92DD-FCF5D8DACB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84D16640-05D1-4F67-92DD-FCF5D8DACB94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
